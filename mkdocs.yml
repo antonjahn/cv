@@ -1,0 +1,27 @@
+site_name: cv
+theme:
+  name: material
+  features:
+    - content.code.copy
+    - navigation.footer
+    - navigation.indexes
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.path
+    - navigation.sections
+    - navigation.top
+    - navigation.tracking
+    - toc.follow
+markdown_extensions:
+  - admonition
+  - pymdownx.superfences:
+nav:
+  - Introduction: index.md
+  - Getting started:
+      - getting-started/index.md
+      - Installation: getting-started/installation.md
+      - First steps: getting-started/first-steps.md
+  - Guides:
+      - guides/index.md
+      - guides/tools.md
