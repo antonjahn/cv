@@ -25,3 +25,4 @@ nav:
   - Guides:
       - guides/index.md
       - guides/tools.md
+      - guides/zig.md
