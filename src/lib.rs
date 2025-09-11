@@ -8,6 +8,7 @@ use std::{
 
 use indicatif::{ProgressBar, ProgressStyle};
 use log::debug;
+use reqwest::blocking::Client;
 
 /// Returns a Vec of version strings for the given host from the zig releases JSON.
 pub fn filter_zig_versions(json: &serde_json::Value, host: &str) -> Vec<String> {
@@ -59,8 +60,9 @@ pub fn detect_host_platform() -> String {
 pub fn zig_install(set_default: bool) -> Result<(), Box<dyn std::error::Error>> {
     let url = "https://ziglang.org/download/index.json";
     debug!("Fetching Zig releases index: {url}");
-    let resp = ureq::get(url).call()?.into_string()?;
-    let json: serde_json::Value = serde_json::from_str(&resp)?;
+    let client = Client::new();
+    let resp = client.get(url).send()?;
+    let json: serde_json::Value = resp.json()?;
     let host = detect_host_platform();
     debug!("Detected host platform: {host}");
     let versions = filter_zig_versions(&json, &host);
@@ -93,12 +95,9 @@ pub fn zig_install(set_default: bool) -> Result<(), Box<dyn std::error::Error>> 
     debug!("Symlink (if --default): {}", symlink_path.display());
 
     // Download tarball with progress bar
-    let resp = ureq::get(tarball_url).call()?;
-    let len = resp
-        .header("Content-Length")
-        .and_then(|s| s.parse::<u64>().ok())
-        .unwrap_or(0);
-    let mut reader = resp.into_reader();
+    let resp = client.get(tarball_url).send()?;
+    let len = resp.content_length().unwrap_or(0);
+    let mut reader = resp;
     fs::create_dir_all(&install_dir)?;
     let tarball_path = install_dir
         .parent()
@@ -176,8 +175,9 @@ pub fn zig_install(set_default: bool) -> Result<(), Box<dyn std::error::Error>> 
 
 pub fn zig_list() -> Result<(), Box<dyn std::error::Error>> {
     let url = "https://ziglang.org/download/index.json";
-    let resp = ureq::get(url).call()?.into_string()?;
-    let json: serde_json::Value = serde_json::from_str(&resp)?;
+    let client = Client::new();
+    let resp = client.get(url).send()?;
+    let json: serde_json::Value = resp.json()?;
 
     let host = detect_host_platform();
     let versions = filter_zig_versions(&json, &host);
