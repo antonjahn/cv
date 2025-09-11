@@ -14,6 +14,7 @@ fn cli() {
     Usage: cv [OPTIONS] [COMMAND]
 
     Commands:
+      init     Initialize a new C/C++ project in the current directory
       zig      Manage zig versions and installations
       version  Display cv's version
       help     Print this message or the help of the given subcommand(s)
@@ -37,6 +38,7 @@ fn cli_help() {
     Usage: cv [OPTIONS] [COMMAND]
 
     Commands:
+      init     Initialize a new C/C++ project in the current directory
       zig      Manage zig versions and installations
       version  Display cv's version
       help     Print this message or the help of the given subcommand(s)
@@ -45,6 +47,23 @@ fn cli_help() {
       -v, --verbose  Show detailed log output globally
       -h, --help     Print help
       -V, --version  Print version
+    ");
+}
+
+#[test]
+fn cli_init_help() {
+    let mut cmd = Command::cargo_bin("cv").unwrap();
+    cmd.args(["init", "--help"]);
+    let output = cmd.assert().success().get_output().stdout.clone();
+    let help = String::from_utf8_lossy(&output);
+    assert_snapshot!(help, @r"
+    Initialize a new C/C++ project in the current directory
+
+    Usage: cv init [OPTIONS]
+
+    Options:
+      -v, --verbose  Show detailed log output globally
+      -h, --help     Print help
     ");
 }
 

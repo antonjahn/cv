@@ -15,6 +15,7 @@ clap-cargo = "0.17.1"
 [dev-dependencies]
 insta = "1.43.2"
 assert_cmd = "2.0"
+tempfile = "3.22.0"
 
 [profile.dev.package]
 insta.opt-level = 3
