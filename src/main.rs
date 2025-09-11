@@ -1,8 +1,9 @@
+use std::env;
+
 use clap::Command;
 use clap_cargo::style::CLAP_STYLING;
 use cv::*;
 use log::error;
-use std::env;
 
 fn main() {
     let mut cmd = Command::new("cv")
@@ -22,7 +23,6 @@ fn main() {
             Command::new("zig")
                 .about("Manage zig versions and installations")
                 .bin_name("cv zig")
-                .styles(CLAP_STYLING)
                 .subcommand(Command::new("list").about("List the available zig installations"))
                 .subcommand(
                     Command::new("install")

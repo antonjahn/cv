@@ -1,11 +1,13 @@
+use std::{
+    env, fs,
+    io::{Read, Write},
+    os::unix::fs::symlink,
+    path::PathBuf,
+    process::Command as ProcessCommand,
+};
+
 use indicatif::{ProgressBar, ProgressStyle};
 use log::debug;
-use std::env;
-use std::fs;
-use std::io::{Read, Write};
-use std::os::unix::fs::symlink;
-use std::path::PathBuf;
-use std::process::Command as ProcessCommand;
 
 /// Returns a Vec of version strings for the given host from the zig releases JSON.
 pub fn filter_zig_versions(json: &serde_json::Value, host: &str) -> Vec<String> {
