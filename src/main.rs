@@ -20,6 +20,9 @@ fn main() {
                 .action(clap::ArgAction::SetTrue),
         )
         .subcommand(
+            Command::new("init").about("Initialize a new C/C++ project in the current directory"),
+        )
+        .subcommand(
             Command::new("zig")
                 .about("Manage zig versions and installations")
                 .bin_name("cv zig")
@@ -73,6 +76,12 @@ fn main() {
                 let _ = cmd.print_help();
             }
         },
+        Some(("init", _)) => {
+            if let Err(e) = cv_init() {
+                eprintln!("Error: {e}");
+                std::process::exit(1);
+            }
+        }
         Some(("version", _)) => {
             println!("{}", env!("CARGO_PKG_VERSION"));
         }

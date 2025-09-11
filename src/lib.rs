@@ -10,6 +10,9 @@ use indicatif::{ProgressBar, ProgressStyle};
 use log::debug;
 use reqwest::blocking::Client;
 
+pub mod project;
+pub use project::cv_init;
+
 /// Returns a Vec of version strings for the given host from the zig releases JSON.
 pub fn filter_zig_versions(json: &serde_json::Value, host: &str) -> Vec<String> {
     let mut versions = Vec::new();

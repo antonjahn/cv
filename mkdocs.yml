@@ -26,3 +26,4 @@ nav:
       - guides/index.md
       - guides/tools.md
       - guides/zig.md
+      - guides/projects.md

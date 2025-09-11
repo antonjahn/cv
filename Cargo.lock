@@ -274,6 +274,7 @@ dependencies = [
  "log",
  "reqwest",
  "serde_json",
+ "tempfile",
 ]
 
 [[package]]
